@@ -4,8 +4,11 @@ const express = require('express');
 
 const app = express();
 
-// 🔥 DAS IST DER WICHTIGSTE TEIL (für UptimeRobot)
-app.use((req, res) => {
+app.get('/', (req, res) => {
+    res.status(200).send('OK');
+});
+
+app.all('*', (req, res) => {
     res.status(200).send('OK');
 });
 
@@ -21,21 +24,21 @@ client.once('ready', () => {
 });
 
 client.on('guildMemberUpdate', async (oldMember, newMember) => {
-    console.log("EVENT WIRD AUSGELOEST");
-
     const addedRole = '1457266433682837576';
     const removeRole = '1457638301228990595';
 
     if (!oldMember.roles.cache.has(addedRole) && newMember.roles.cache.has(addedRole)) {
-        console.log("ROLLE WURDE HINZUGEFÜGT");
-
         if (newMember.roles.cache.has(removeRole)) {
             await newMember.roles.remove(removeRole);
-            console.log("GAST ENTFERNT");
         }
     }
 });
 
+app.listen(process.env.PORT || 3000, () => {
+    console.log('Webserver läuft');
+});
+
+client.login(process.env.BOT_TOKEN);
 // 🌐 Webserver starten
 const express = require('express');
 const app = express();
