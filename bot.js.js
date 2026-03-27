@@ -4,6 +4,7 @@ const express = require('express');
 
 const app = express();
 
+// 🔥 DAS IST DER WICHTIGSTE TEIL (für UptimeRobot)
 app.use((req, res) => {
     res.status(200).send('OK');
 });
@@ -35,8 +36,10 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
     }
 });
 
+// 🌐 Webserver starten
 app.listen(process.env.PORT || 3000, () => {
     console.log('Webserver läuft');
 });
 
+// 🤖 Bot starten
 client.login(process.env.BOT_TOKEN);
