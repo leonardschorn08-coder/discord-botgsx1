@@ -37,9 +37,20 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
 });
 
 // 🌐 Webserver starten
+const express = require('express');
+const app = express();
+
+// 🔥 ALLES abfangen
+app.get('/', (req, res) => {
+    res.status(200).send('OK');
+});
+
+// Fallback für ALLE anderen Routen
+app.all('*', (req, res) => {
+    res.status(200).send('OK');
+});
+
 app.listen(process.env.PORT || 3000, () => {
     console.log('Webserver läuft');
 });
-
-// 🤖 Bot starten
 client.login(process.env.BOT_TOKEN);
